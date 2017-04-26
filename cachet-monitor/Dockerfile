@@ -3,6 +3,9 @@ MAINTAINER Khoa Nguyen <khoa.tan.nguyen.96@gmail.com>
 
 ARG CACHET_MONITOR_VER=v3.0
 
+LABEL description="Monitoring Plugin for CachetHQ" \
+      maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
+
 RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && BUILD_DEPS=" \
     wget" \

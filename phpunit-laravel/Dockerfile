@@ -1,5 +1,7 @@
 FROM php:7.1.2
-LABEL maintainer "khoa.tan.nguyen.96@gmail.com"
+
+LABEL description="PHPUnit configured for Laravel" \
+      maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com>"
 
 RUN apt-get update && apt-get install -y \
   git \
