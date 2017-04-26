@@ -13,6 +13,8 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     ${BUILD_DEPS} \
     ca-certificates
 
+RUN adduser -S cachet
+
 RUN cd /tmp \
   && wget https://github.com/CastawayLabs/cachet-monitor/releases/download/${CACHET_MONITOR_VER}/cachet_monitor_linux_amd64 \
   && cp cachet_monitor_linux_amd64 /usr/bin/cachet-monitor \
@@ -20,6 +22,8 @@ RUN cd /tmp \
   && mkdir /config \
   && apk del ${BUILD_DEPS} \
   && rm -rf /var/cache/apk/* /tmp/*
+
+USER cachet
 
 VOLUME /config
 
