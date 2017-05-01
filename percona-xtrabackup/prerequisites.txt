@@ -1,0 +1,18 @@
+Percona XtraBackup Prequisite Packages (CentOS, Alpine)
+
+bzr, bzr
+cmake, cmake
+gcc, gcc
+gcc-c++, g++
+libaio, libaio
+libaio-devel, libaio-dev
+libc-devel, libc-dev
+automake, automake
+autoconf, autoconf
+bison, bison
+libtool, libtool
+ncurses-devel, ncurses-dev
+libgcrypt-devel, libgcrypt-dev
+libev-devel, libev-dev
+libcurl-devel, curl-dev
+vim-common, vim
