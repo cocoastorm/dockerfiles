@@ -1,2 +1,0 @@
-https://github.com/percona/percona-xtrabackup/archive/percona-xtrabackup-2.3.8.tar.gz
-cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/tmp/boost&& make -j4

@@ -62,19 +62,16 @@ RUN addgroup -S backup \
     && addgroup backup backup \
     && addgroup backup mysql
 
-# Set Up Volumes
+# Set Up Volumes and Key
 RUN mkdir -p /backups/mysql \
     && mkdir -p /etc/mysql \
     && chown -R backup:backup /backups/mysql \
-    && chown -R backup:mysql /etc/mysql
+    && chown -R backup:mysql /etc/mysql \
+    && touch /backups/mysql/encryption_key \
+    && printf '%s' "$(openssl rand -base64 24)" >> /backups/mysql/encryption_key
 VOLUME /backups/mysql /etc/mysql
-
-# Run Script
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
 
 USER backup
 ENV USER backup
 WORKDIR /backups/mysql
-
-CMD ["bash", "-c", "/run.sh", ";", "bash"]
+SHELL ["/bin/bash", "-c"]
