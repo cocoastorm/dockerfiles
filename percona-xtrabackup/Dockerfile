@@ -43,15 +43,19 @@ RUN apk -U upgrade && apk add \
     libressl \
     ncurses \
     openssl \
-    zlib
+    zlib \
 
-# Compile and Install Percona XtraBackup
-RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
+    # Compile and Install Percona XtraBackup
+    && NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     && cd /tmp && mkdir xtrabackup \
     && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xvz --strip 1 \
     && cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off && make -j ${NB_CORES} && make install \
-    && cp -r /usr/local/xtrabackup/bin /usr/local/bin \
+
+    # Copy over compiled binaries
+    && cp -r /usr/local/xtrabackup/bin /usr/bin \
     && chmod -R +x /usr/bin \
+
+    # Clean Up
     && apk del ${BUILD_DEPS} \
     && rm -rf /var/cache/apk/* /tmp/* /usr/local/xtrabackup
 
