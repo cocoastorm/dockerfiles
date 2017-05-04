@@ -47,9 +47,10 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
 RUN cd /tmp && mkdir xtrabackup \
     && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xvz --strip 1 \
     && cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off && make -j ${NB_CORES} && make install \
-    && chmod -R +x /usr/local/xtrabackup/bin && ln -s /usr/local/xtrabackup/bin/* /usr/bin \
+    && cp -r /usr/local/xtrabackup/bin /usr/local/bin \
+    && chmod -R +x /usr/bin \
     && apk del ${BUILD_DEPS} \
-    && rm -rf /var/cache/apk/* /tmp/*
+    && rm -rf /var/cache/apk/* /tmp/* /usr/local/xtrabackup
 
 # Copy Backup Scripts
 COPY scripts/* /usr/local/bin/
