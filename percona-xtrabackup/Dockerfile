@@ -1,5 +1,6 @@
 FROM alpine:3.5
 LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
+LABEL description="Percona XtraBackup with Custom Bash Scripts"
 ARG XTRABACKUP_VER=2.3.8
 
 # Append /usr/local/bin to PATH

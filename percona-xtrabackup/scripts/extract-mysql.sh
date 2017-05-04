@@ -5,7 +5,7 @@ export LC_ALL=C
 encryption_key_file="/backups/mysql/encryption_key"
 log_file="extract-progress.log"
 number_of_args="${#}"
-processors="$(nproc --all)"
+processors="$(getconf _NPROCESSORS_CONF)"
 
 # Use this to echo to standard error
 error () {
