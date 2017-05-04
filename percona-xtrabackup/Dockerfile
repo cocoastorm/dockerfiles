@@ -1,9 +1,9 @@
 FROM alpine:3.5
-
+LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
 ARG XTRABACKUP_VER=2.3.8
 
-RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
-  && BUILD_DEPS=" \
+# Required Build Dependencies
+ENV BUILD_DEPS=" \
     automake \
     autoconf \
     binutils \
@@ -30,8 +30,10 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     musl-dev \
     mysql-client \
     ncurses-dev \
-    zlib-dev" \
-  && apk -U upgrade && apk add \
+    zlib-dev"
+
+# Install required packages
+RUN apk -U upgrade && apk add \
     ${BUILD_DEPS} \
     bash \
     ca-certificates \
@@ -44,7 +46,8 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     zlib
 
 # Compile and Install Percona XtraBackup
-RUN cd /tmp && mkdir xtrabackup \
+RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
+    && cd /tmp && mkdir xtrabackup \
     && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xvz --strip 1 \
     && cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off && make -j ${NB_CORES} && make install \
     && cp -r /usr/local/xtrabackup/bin /usr/local/bin \
