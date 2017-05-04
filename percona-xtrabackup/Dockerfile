@@ -2,6 +2,9 @@ FROM alpine:3.5
 LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
 ARG XTRABACKUP_VER=2.3.8
 
+# Append /usr/local/bin to PATH
+ENV PATH /usr/local/bin:$PATH
+
 # Required Build Dependencies
 ENV BUILD_DEPS=" \
     automake \
@@ -36,7 +39,6 @@ ENV BUILD_DEPS=" \
 RUN apk -U upgrade && apk add \
     ${BUILD_DEPS} \
     bash \
-    ca-certificates \
     coreutils \
     curl \
     libaio \
@@ -55,6 +57,11 @@ RUN apk -U upgrade && apk add \
     && cp -r /usr/local/xtrabackup/bin /usr/bin \
     && chmod -R +x /usr/bin \
 
+    # Generate Key
+    && mkdir -p /backups/mysql \
+    && touch /backups/mysql/encryption_key \
+    && printf '%s' "$(openssl rand -base64 24)" >> /backups/mysql/encryption_key \
+
     # Clean Up
     && apk del ${BUILD_DEPS} \
     && rm -rf /var/cache/apk/* /tmp/* /usr/local/xtrabackup
@@ -62,14 +69,7 @@ RUN apk -U upgrade && apk add \
 # Copy Backup Scripts
 COPY scripts/* /usr/local/bin/
 RUN chmod +x -R /usr/local/bin
-ENV PATH /usr/local/bin:$PATH
 
-# Set Up Volumes and Key
-RUN mkdir -p /backups/mysql \
-    && mkdir -p /etc/mysql \
-    && touch /backups/mysql/encryption_key \
-    && printf '%s' "$(openssl rand -base64 24)" >> /backups/mysql/encryption_key
 VOLUME /backups/mysql /etc/mysql
-
 WORKDIR /backups/mysql
 SHELL ["/bin/bash", "-c"]
