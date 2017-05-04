@@ -3,7 +3,6 @@
 export LC_ALL=C
 
 days_of_backups=3  # Must be less than 7
-backup_owner="backup"
 parent_dir="/backups/mysql"
 defaults_file="/etc/mysql/backup.cnf"
 todays_dir="${parent_dir}/$(date +%a)"
@@ -21,11 +20,6 @@ error () {
 trap 'error "An unexpected error occurred."' ERR
 
 sanity_check () {
-    # Check user running the script
-    if [ "$USER" != "$backup_owner" ]; then
-        error "Script can only be run as the \"$backup_owner\" user"
-    fi
-    
     # Check whether the encryption key file is available
     if [ ! -r "${encryption_key_file}" ]; then
         error "Cannot read encryption key at ${encryption_key_file}"

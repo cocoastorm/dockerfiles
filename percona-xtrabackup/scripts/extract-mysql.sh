@@ -2,7 +2,6 @@
 
 export LC_ALL=C
 
-backup_owner="backup"
 encryption_key_file="/backups/mysql/encryption_key"
 log_file="extract-progress.log"
 number_of_args="${#}"
@@ -17,11 +16,6 @@ error () {
 trap 'error "An unexpected error occurred.  Try checking the \"${log_file}\" file for more information."' ERR
 
 sanity_check () {
-    # Check user running the script
-    if [ "${USER}" != "${backup_owner}" ]; then
-        error "Script can only be run as the \"${backup_owner}\" user"
-    fi
-    
     # Check whether the qpress binary is installed
     if ! command -v qpress >/dev/null 2>&1; then
         error "Could not find the \"qpress\" command.  Please install it and try again."
