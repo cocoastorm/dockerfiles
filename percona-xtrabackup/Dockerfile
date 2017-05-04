@@ -35,6 +35,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     ${BUILD_DEPS} \
     bash \
     ca-certificates \
+    coreutils \
     curl \
     libaio \
     libressl \
@@ -44,7 +45,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
 
 # Compile and Install Percona XtraBackup
 RUN cd /tmp && mkdir xtrabackup \
-    && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar zxv --strip 1 \
+    && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xvz --strip 1 \
     && cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off && make -j ${NB_CORES} && make install \
     && chmod -R +x /usr/local/xtrabackup/bin && ln -s /usr/local/xtrabackup/bin/* /usr/bin \
     && apk del ${BUILD_DEPS} \
@@ -55,23 +56,12 @@ COPY scripts/* /usr/local/bin/
 RUN chmod +x -R /usr/local/bin
 ENV PATH /usr/local/bin:$PATH
 
-# Add User
-RUN addgroup -S backup \
-    && addgroup -S mysql \
-    && adduser -S backup \
-    && addgroup backup backup \
-    && addgroup backup mysql
-
 # Set Up Volumes and Key
 RUN mkdir -p /backups/mysql \
     && mkdir -p /etc/mysql \
-    && chown -R backup:backup /backups/mysql \
-    && chown -R backup:mysql /etc/mysql \
     && touch /backups/mysql/encryption_key \
     && printf '%s' "$(openssl rand -base64 24)" >> /backups/mysql/encryption_key
 VOLUME /backups/mysql /etc/mysql
 
-USER backup
-ENV USER backup
 WORKDIR /backups/mysql
 SHELL ["/bin/bash", "-c"]
