@@ -1,6 +1,8 @@
 FROM alpine:3.5
+
 LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
 LABEL description="Percona XtraBackup with Custom Bash Scripts"
+
 ARG XTRABACKUP_VER=2.3.8
 
 # Append /usr/local/bin to PATH
@@ -48,8 +50,15 @@ RUN apk -U upgrade && apk add \
     openssl \
     zlib \
 
-    # Compile and Install Percona XtraBackup
+    # Figure out Number of CPU Cores
     && NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
+
+    # Compile and Install QPress
+    && cd /usr/bin \
+    && wget -qO- http://www.quicklz.com/qpress-11-linux-x64.tar | tar xvz \
+    && chmod +x qpress \
+    
+    # Compile and Install Percona XtraBackup
     && cd /tmp && mkdir xtrabackup \
     && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xvz --strip 1 \
     && cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off && make -j ${NB_CORES} && make install \
