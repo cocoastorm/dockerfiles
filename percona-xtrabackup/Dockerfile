@@ -20,6 +20,7 @@ ENV BUILD_DEPS=" \
     gcc \
     g++ \
     git \
+    gzip \
     tar \
     wget \
     vim \
@@ -42,9 +43,12 @@ ENV BUILD_DEPS=" \
 RUN apk -U upgrade && apk add \
     ${BUILD_DEPS} \
     bash \
+    ca-certificates \
     coreutils \
     curl \
     libaio \
+    libgcc \
+    libstdc++ \
     libressl \
     ncurses \
     openssl \
@@ -54,13 +58,14 @@ RUN apk -U upgrade && apk add \
     && NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
 
     # Compile and Install QPress
-    && cd /usr/bin \
-    && wget -qO- http://www.quicklz.com/qpress-11-linux-x64.tar | tar xvz \
-    && chmod +x qpress \
+    && mkdir -p /tmp/qpress && cd /tmp/qpress \
+    && wget -qO- https://git.cocoastorm.com/khoa/qpress/archive/1.0.tar.gz | tar xz --strip 1 \
+    && make -j ${NB_CORES} \
+    && mv qpress /usr/bin \
     
     # Compile and Install Percona XtraBackup
-    && cd /tmp && mkdir xtrabackup \
-    && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xvz --strip 1 \
+    && mkdir -p /tmp/xtrabackup && cd /tmp/xtrabackup \
+    && wget -qO- https://github.com/khoanguyen96/percona-xtrabackup/archive/hotfix.tar.gz | tar xz --strip 1 \
     && cmake -DBUILD_CONFIG=xtrabackup_release -DWITH_MAN_PAGES=off && make -j ${NB_CORES} && make install \
 
     # Copy over compiled binaries
