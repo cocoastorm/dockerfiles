@@ -14,4 +14,3 @@ RUN curl --silent --show-error --location --output /usr/local/bin/dep https://de
   && chmod +x /usr/local/bin/dep
 
 ENTRYPOINT ["dep"]
-CMD ['deploy']
