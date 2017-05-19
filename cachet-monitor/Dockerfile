@@ -1,5 +1,4 @@
 FROM alpine:3.5
-MAINTAINER Khoa Nguyen <khoa.tan.nguyen.96@gmail.com>
 
 ARG CACHET_MONITOR_VER=v3.0
 
