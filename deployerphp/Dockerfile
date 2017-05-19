@@ -12,5 +12,3 @@ RUN apt-get update && apt-get install -y \
 # Download and Install Deployer from deployer.org
 RUN curl --silent --show-error --location --output /usr/bin/dep https://deployer.org/releases/${DEPLOYER_VER}/deployer.phar \
   && chmod +x /usr/bin/dep
-
-ENTRYPOINT ["/usr/bin/dep"]
