@@ -1,5 +1,6 @@
 FROM alpine:3.5
-LABEL maintainer = "Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
+LABEL maintainer = "Khoa Nguyen <khoa.tan.nguyen.96@gmail.com" \
+      description = "Vault Client"
 
 ARG VAULT_VER=0.7.2
 
