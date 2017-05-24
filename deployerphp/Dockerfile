@@ -1,12 +1,12 @@
 FROM php:cli
 LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
 
-ARG DEPLOYER_VER=v5.0.0
+ARG DEPLOYER_VER=v5.0.1
 
 # Install SSH Client and CA Certificates
 RUN apt-get update && apt-get install -y \
   ca-certificates \
-  ssh \
+  openssh-client \
 && rm -rf /var/lib/apt/lists/*
 
 # Download and Install Deployer from deployer.org
