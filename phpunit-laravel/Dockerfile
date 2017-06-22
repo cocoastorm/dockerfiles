@@ -46,3 +46,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Install Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install wait-for-it
+RUN curl --slient --show-error --location --output /usr/local/bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
+  && ln -s usr/local/bin/wait-for-it.sh \
+  && chmod +x /usr/local/bin/wait-for-it.sh
