@@ -37,17 +37,17 @@ RUN pecl install xdebug-2.5.0 && docker-php-ext-enable xdebug
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
 
+# Install wait-for-it
+RUN curl --location --output /usr/local/bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
+  && ln -s usr/local/bin/wait-for-it.sh \
+  && chmod +x /usr/local/bin/wait-for-it.sh
+
 # Install PHPUnit 5.7.9
-RUN curl --silent --show-error --location --output /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-5.7.9.phar && \
-  chmod +x /usr/local/bin/phpunit
+RUN curl --silent --show-error --location --output /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-5.7.9.phar \
+  && chmod +x /usr/local/bin/phpunit
 
 # Allow Composer to be run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Install Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install wait-for-it
-RUN curl --slient --show-error --location --output /usr/local/bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
-  && ln -s usr/local/bin/wait-for-it.sh \
-  && chmod +x /usr/local/bin/wait-for-it.sh
