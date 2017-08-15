@@ -129,8 +129,6 @@ RUN NB_CORES=${BUILDCORES-$(getconf _NPROCESSORS_CONF)} \
 set -x \
   && addgroup -g ${GID} -S www-data \
   && adduser -u ${UID} -D -S -G www-data www-data \
-  && chown www-data:www-data /var/www/html \
-  && chown www-data:www-data /lighttpd \
 
 ### Packages Installations
   && BUILD_DEPS=" \
@@ -178,6 +176,7 @@ set -x \
   && wget http://download.lighttpd.net/lighttpd/releases-${LIGHTTPD_RELEASE}/lighttpd-${LIGHTTPD_VER}.tar.gz.asc -O /tmp/lighttpd-${LIGHTTPD_VER}.tar.gz.asc \
 
   # h5ai
+  && mkdir -p /opt \
   && wget https://release.larsjung.de/h5ai/h5ai-${H5AI_VER}.zip -O /opt/h5ai-${H5AI_VER}.zip \
 
   ## php
