@@ -5,6 +5,9 @@ ARG PHP_VER=7.1.8
 ARG LIBICONV_VER=1.15
 ARG H5AI_VER=0.29.0
 
+ENV UID=991 GID=991 \
+    H5AI_VER=${H5AI_VER}
+
 ARG PHP_MIRROR=http://ch1.php.net
 
 ARG BUILD_CORES
@@ -124,8 +127,8 @@ RUN NB_CORES=${BUILDCORES-$(getconf _NPROCESSORS_CONF)} \
 
 # ensure www-data user exists
 set -x \
-  && addgroup -g 82 -S www-data \
-  && adduser -u 82 -D -S -G www-data www-data \
+  && addgroup -g ${GID} -S www-data \
+  && adduser -u ${UID} -D -S -G www-data www-data \
   && chown www-data:www-data /var/www/html \
   && chown www-data:www-data /lighttpd \
 
@@ -175,7 +178,7 @@ set -x \
   && wget http://download.lighttpd.net/lighttpd/releases-${LIGHTTPD_RELEASE}/lighttpd-${LIGHTTPD_VER}.tar.gz.asc -O /tmp/lighttpd-${LIGHTTPD_VER}.tar.gz.asc \
 
   # h5ai
-  && wget https://release.larsjung.de/h5ai/h5ai-${H5AI_VER}.zip -O /tmp/h5ai-${H5AI_VER}.zip \
+  && wget https://release.larsjung.de/h5ai/h5ai-${H5AI_VER}.zip -O /opt/h5ai-${H5AI_VER}.zip \
 
   ## php
   && wget ${PHP_MIRROR}/get/php-${PHP_VER}.tar.gz/from/this/mirror -O /tmp/php-${PHP_VER}.tar.gz \
@@ -189,7 +192,6 @@ set -x \
   && mkdir -p /usr/src \
   
   ## extract all the things
-  && unzip /tmp/h5ai-${H5AI_VER}.zip -d /var/www/html \
   && tar xzf /tmp/lighttpd-${LIGHTTPD_VER}.tar.gz -C /usr/src \
   && tar xzf /tmp/php-${PHP_VER}.tar.gz -C /usr/src \
   && tar xzf /tmp/libiconv-${LIBICONV_VER}.tar.gz -C /usr/src \
