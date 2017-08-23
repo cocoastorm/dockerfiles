@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y \
 # mcrypt, pdo_mysql, intl, zip, opcache
 RUN docker-php-ext-install mcrypt pdo_mysql intl gd zip bz2 opcache
 
+RUN pecl install xdebug-2.5.0 && docker-php-ext-enable xdebug
+
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
 
