@@ -28,5 +28,5 @@ docker run \
 -v ~/.ssh/id_rsa:/root/.ssh/id_rsa \
 -v /path/to/deploy.php:/deploy.php \
 khoanguyent/deployerphp \
-deploy
+dep deploy
 ```
