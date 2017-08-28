@@ -1,8 +1,10 @@
 #!/bin/sh
 set -e
 
-# copy h5ai
-unzip /opt/h5ai-${H5AI_VER}.zip -d /var/www/html
+# copy h5ai, only if it doesn't exist
+if [ ! -d "/var/www/html/_h5ai" ]; then
+  unzip /opt/h5ai-${H5AI_VER}.zip -d /var/www/html
+fi
 
 # set uid/gid in lighttpd.conf
 # sed -i -e '/server.username =/ s/= .*/= $UID/' /lighttpd/lighttpd.conf
