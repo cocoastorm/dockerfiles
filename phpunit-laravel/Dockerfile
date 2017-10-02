@@ -1,4 +1,4 @@
-FROM php:7.1.2
+FROM php:latest
 
 LABEL description="PHPUnit configured for Laravel" \
       maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com>"
