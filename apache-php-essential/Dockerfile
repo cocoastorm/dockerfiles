@@ -7,9 +7,10 @@ ARG PHP_EXT_LIST=" \
   pdo_sqlite \
   pdo_pgsql \
   pdo_mysql \
+  pgsql \
   curl \
   fileinfo \
-  pgsql \
+  zip \
   exif"
 
 ARG CUSTOM_BUILD_PKGS="\
@@ -24,6 +25,8 @@ ARG CUSTOM_BUILD_PKGS="\
 RUN apt-get update && apt-get install -yqq \
     git \
     wget \
+    unzip \
+    zip \
     zlibc \
     zlib1g \
     ${CUSTOM_BUILD_PKGS} \
