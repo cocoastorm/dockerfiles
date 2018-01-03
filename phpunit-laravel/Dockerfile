@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
   git \
   libcurl4-gnutls-dev \
   libicu-dev \
-  libmcrypt-dev \
   libvpx-dev \
   libjpeg-dev \
   libpng-dev \
@@ -29,17 +28,23 @@ RUN apt-get update && apt-get install -y \
   openssh-client
 
 # Install PHP Extensions
-# mcrypt, pdo_mysql, intl, zip, opcache
-RUN docker-php-ext-install mcrypt pdo_mysql intl gd zip bz2 opcache
-
-RUN pecl install xdebug-2.5.0 && docker-php-ext-enable xdebug
+# pdo_mysql, intl, zip, opcache, and xdebug
+RUN docker-php-ext-install \
+  pdo_mysql \
+  intl \
+  gd \
+  zip \
+  bz2 \
+  opcache\
+&& pecl install \
+  xdebug-2.5.0 \
+&& docker-php-ext-enable xdebug
 
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
 
 # Install wait-for-it
 RUN curl --location --output /usr/local/bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
-  && ln -s usr/local/bin/wait-for-it.sh \
   && chmod +x /usr/local/bin/wait-for-it.sh
 
 # Install PHPUnit 5.7.9
