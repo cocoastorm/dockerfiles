@@ -7,7 +7,7 @@ LABEL description="mysqldump-secure" \
 
 # Build Dependencies
 # Install mysqldump-secure
-RUN apk add --no-cache build-base ca-certificates \
+RUN apk add --no-cache build-base ca-certificates coreutils \
   && cd /tmp \
   && curl -L https://github.com/cytopia/mysqldump-secure/archive/${MYSQLDUMP_SECURE_VER}.tar.gz | tar xvzf - \
   && cd mysqldump-secure-${MYSQLDUMP_SECURE_VER} && ./configure \
