@@ -5,8 +5,6 @@ ARG MYSQLDUMP_SECURE_VER=0.16.3
 LABEL description="mysqldump-secure" \
       maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com>"
 
-ENV MYSQL_CNF_FILE=/etc/mysqldump-secure.cnf
-
 # Build Dependencies
 # Install mysqldump-secure
 RUN apk add --no-cache \
