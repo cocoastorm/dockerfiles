@@ -9,7 +9,13 @@ ENV MYSQL_CNF_FILE=/etc/mysqldump-secure.cnf
 
 # Build Dependencies
 # Install mysqldump-secure
-RUN apk add --no-cache build-base ca-certificates coreutils \
+RUN apk add --no-cache \
+  build-base \
+  ca-certificates \
+  coreutils \
+  openssl \
+  gzip \
+  zlib \
   && cd /tmp \
   && curl -L https://github.com/cytopia/mysqldump-secure/archive/${MYSQLDUMP_SECURE_VER}.tar.gz | tar xvzf - \
   && cd mysqldump-secure-${MYSQLDUMP_SECURE_VER} && ./configure \
