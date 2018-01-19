@@ -1,4 +1,4 @@
-FROM khoanguyent/alpine:latest
+FROM alpine:latest
 
 ARG TERRARIA_VER=1353
 
