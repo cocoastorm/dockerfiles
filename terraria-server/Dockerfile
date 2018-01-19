@@ -12,13 +12,13 @@ ENV LOG_ROOT=/var/log/terraria
 RUN apk add --no-cache \
   wget \
   zip \
-  && mkdir -p ${SERVER_ROOT} \
+  && mkdir -p ${SERVER_ROOT}/ \
   && wget -q http://terraria.org/system/dedicated_servers/archives/000/000/032/original/terraria-server-1353.zip -O /tmp/terraria.zip \
-  && unzip /tmp/terraria.zip ${TERRARIA_VERSION}/Linux/* -d ${SERVER_ROOT} \
+  && unzip /tmp/terraria.zip ${TERRARIA_VER}/Linux/* -d ${SERVER_ROOT} \
   && rm -rf /tmp/* \
   && cd ${SERVER_ROOT}/${TERRARIA_VER}/Linux \
   && chmod a+rw * \
-  && chmod a+x TerraraServer*
+  && chmod a+x TerrariaServer*
 
 VOLUME ["/world"]
 EXPOSE 7777
