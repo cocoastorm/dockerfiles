@@ -1,6 +1,6 @@
 FROM runmymind/docker-android-sdk:ubuntu-standalone
 
-ARG GRADLE_VERSION="4.3.1"
+ARG GRADLE_VERSION="4.4.1"
 
 ENV GRADLE_PATH /opt/gradle/gradle-${GRADLE_VERSION}/bin
 ENV PATH $GRADLE_PATH:$PATH
