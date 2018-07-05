@@ -1,10 +1,9 @@
 FROM mhart/alpine-node:latest
 
 RUN apk --no-cache add \
+  build-base \
   chromium \
   git \
-  gcc \
-  g++ \
   python \
   ttf-freefont \
   udev \
