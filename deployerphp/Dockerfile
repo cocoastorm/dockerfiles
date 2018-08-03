@@ -1,8 +1,8 @@
 FROM php:alpine
 LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
 
-ARG DEPLOYER_VER=v6.0.0
-ENV DEPLOYER_CHECKSUM=674db6c53b40818d0a2eede4003d3b67a0ce9f99
+ARG DEPLOYER_VER=v6.2.0
+ENV DEPLOYER_CHECKSUM=49f5ffa976a842434783d577822c52cbb06dadcb
 
 # Install SSH Client and CA Certificates
 RUN apk add --no-cache ca-certificates openssh-client

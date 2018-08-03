@@ -1,4 +1,4 @@
-FROM php:7.1.9-apache
+FROM php:7-apache
 
 ARG PHP_EXT_LIST=" \
   mysqli \

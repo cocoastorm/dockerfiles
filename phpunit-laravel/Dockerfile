@@ -37,7 +37,7 @@ RUN docker-php-ext-install \
   bz2 \
   opcache\
 && pecl install \
-  xdebug-2.5.0 \
+  xdebug \
 && docker-php-ext-enable xdebug
 
 # Memory Limit

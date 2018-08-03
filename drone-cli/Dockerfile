@@ -1,7 +1,7 @@
 FROM alpine:3.7
 LABEL maintainer="Khoa Nguyen <khoa.tan.nguyen.96@gmail.com"
 
-ARG DRONE_CLI_VER=0.8.3
+ARG DRONE_CLI_VER=0.8.6
 
 RUN apk --update --no-cache add \
   --virtual build-dependencies \
