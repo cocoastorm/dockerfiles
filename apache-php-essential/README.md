@@ -1,6 +1,6 @@
 # apache-php-essential
 
-Docker image based off of `php:7.1.8-apache` with extras included.
+Docker image based off of `php:7-apache` with extras included.
 
 ### Apache Modules Activated
 
